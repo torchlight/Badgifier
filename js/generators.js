@@ -276,8 +276,10 @@ function SplitNameOntoTwoLines(doc, text, h) {
     }
 
     if (textParts.length < 1) {
-        return;
+        doc.restoreGraphicsState();
+        return ["", ""];
     } else if (textParts.length < 2) {
+        doc.restoreGraphicsState();
         return ["", text];
     }
 
