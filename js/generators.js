@@ -263,10 +263,10 @@ function splitNameOntoTwoLines(doc, text, h) {
     let bracketIndex = text.indexOf("(")
     if (bracketIndex != -1) {
         let bracketPart = text.slice(bracketIndex)
-        let textParts = text.substr(0, bracketIndex - 1).split(" ")
+        textParts = text.substr(0, bracketIndex - 1).split(" ")
         textParts.push(bracketPart)
     } else {
-        let textParts = text.split(" ")
+        textParts = text.split(" ")
     }
 
     if (textParts.length < 1) {
@@ -998,12 +998,12 @@ function addChampionshipPortraitNameBadge(doc, index) {
 }
 
 // Draw a standard certificate for podium winners
-function addCertificate(doc, eventIndex, place, dateText, tintedImage, otherEventText = "") {
-
+function addCertificate(doc, eventIndex, place, dateText, tintedImage, blank=false, otherEventText = "", otherResultPrefixText = "") {
     // Get event specific text
     let eventText = ""
     let resultPrefixText = ""
-    if (eventIndex != wcif.events.length) {
+    let placeText = "Awarded to:"
+    if (!blank) {
         eventText = EVENT_MAP[wcif.events[eventIndex].id]
         resultPrefixText = EVENT_FORMAT_MAP[wcif.events[eventIndex].rounds[wcif.events[eventIndex].rounds.length - 1].format]
         if (wcif.events[eventIndex].id == "333mbf") {
@@ -1012,16 +1012,14 @@ function addCertificate(doc, eventIndex, place, dateText, tintedImage, otherEven
         if (wcif.events[eventIndex].id == "333fm") {
             resultPrefixText = FEWEST_MOVES_FORMAT_TEXT
         }
+        placeText = PLACE_MAP[place]
     }
 
     if (otherEventText != "") {
         eventText = otherEventText
     }
-
-    // Determine place specific text
-    let placeText = "Awarded to:"
-    if (eventIndex != wcif.events.length) {
-        placeText = PLACE_MAP[place]
+    if (otherResultPrefixText != "") {
+        resultPrefixText = otherResultPrefixText
     }
 
     let pageColor = hexToRgb(settings.certPageColor)
@@ -1555,31 +1553,24 @@ function makeCertificates() {
     certDate = certDate.format("D MMMM Y")
 
     // For each event and a blank
-    for (let e = 0; e < wcif.events.length + 1; e++) {
-
+    for (let e = 0; e < wcif.events.length ; e++) {
         // Create first, second and third certificates for events
         for (let p = 2; p >= 0; p--) {
             // Create a new page
             if (e != 0 || p != 2) {
                 globalDoc.addPage("a4", "l")
             }
-
             addCertificate(globalDoc, e, p, certDate, tintedImage)
-
-            // Only need one page for empty certificate
-            if (e == wcif.events.length) {
-                break
-            }
         }
     }
+    // Add last blank page
+    globalDoc.addPage("a4", "l")
+    addCertificate(globalDoc, 0, 0, certDate, tintedImage, blank=true)
 
     return true
 }
 
-function makeNewcomerCertificates() {
-    // WCIF doesn't contain main event so assume first event (typically 3x3) is main event
-    let eventIndex = 0
-
+function makeCustomCertificates() {
     // Convert and tint background
     globalDoc = new jspdf.jsPDF({
         orientation: 'l',
@@ -1603,7 +1594,7 @@ function makeNewcomerCertificates() {
             globalDoc.addPage("a4", "l")
         }
 
-        addCertificate(globalDoc, eventIndex, p, certDate, tintedImage, EVENT_MAP[wcif.events[eventIndex].id] + " Newcomer")
+        addCertificate(globalDoc, 0, p, certDate, tintedImage, false, settings.customCertEventName, settings.customCertResultPrefix)
     }
 
     return true
@@ -1611,7 +1602,7 @@ function makeNewcomerCertificates() {
 
 function makeParticipationCertificates() {
     // Name badges
-    globalDoc = new global.jspdf.jsPDF({
+    globalDoc = new jspdf.jsPDF({
         orientation: 'p',
         unit: 'mm',
         format: 'a4',

@@ -297,6 +297,21 @@
                             </label>
                         </div>
                     </span>
+                    <span class="custom-certificate-only">
+                        <hr>
+                        <div class="input-group mb-3 custom-certificate-only">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text">Custom Event Name</span>
+                            </div>
+                            <input autocomplete="off" type="text" class="form-control" placeholder="My Custom Event" onchange="settings.customCertEventName = this.value">
+                        </div>
+                        <div class="input-group mb-3 custom-certificate-only">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text">Custom Result Prefix</span>
+                            </div>
+                            <input autocomplete="off" type="text" class="form-control" value="Average of:" onchange="settings.customCertResultPrefix = this.value">
+                        </div>
+                    </span>
                 </div>
             </div>
 

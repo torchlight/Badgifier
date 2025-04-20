@@ -4,7 +4,7 @@ const TEMPLATES = [
         name: "A6 Landscape",
         description: "Individual A7 landscape badges and schedule for printing on A6 paper",
         generationFunction: makeA6LandscapeBadges,
-        isCertificate: false,
+        type: "badge",
         newcomersFirst: true,
         placeholderImage: "assets/a7-placeholder.png",
         imageDescription: "Background images should be landscape A7 size (105mm x 74.25mm) or 1241px x 877px is recommended. The top 50mm (591px) is available for your competitions logo. The bottom 24.25mm (286px) is reserved for badge content and this part of your image should be very simple or blank. PNG or JPEG image formats are recommended.",
@@ -13,7 +13,7 @@ const TEMPLATES = [
         name: "A6 Portrait",
         description: "Individual A7 portrait badges and schedule for printing on A6 paper",
         generationFunction: makeA6PortraitBadges,
-        isCertificate: false,
+        type: "badge",
         newcomersFirst: true,
         placeholderImage: "assets/a7p-placeholder.png",
         imageDescription: "Background images should be portrait A7 size (74.25mm x 105mm) or 877px x 1241px is recommended. The top 64mm (756px) is available for your competitions logo. The bottom 41mm (485px) is reserved for badge content and this part of your image should be very simple or blank. PNG or JPEG image formats are recommended.",
@@ -22,7 +22,7 @@ const TEMPLATES = [
         name: "A4 Landscape 2x2",
         description: "4x A7 landscape badges and schedules for printing on A4 paper",
         generationFunction: makeA4LandscapeBadges,
-        isCertificate: false,
+        type: "badge",
         newcomersFirst: true,
         placeholderImage: "assets/a7-placeholder.png",
         imageDescription: "Background images should be landscape A7 size (105mm x 74.25mm) or 1241px x 877px is recommended. The top 50mm (591px) is available for your competitions logo. The bottom 24.25mm (286px) is reserved for badge content and this part of your image should be very simple or blank. PNG or JPEG image formats are recommended.",
@@ -31,7 +31,7 @@ const TEMPLATES = [
         name: "A4 Portrait 2x2",
         description: "4x A7 portrait badges and schedules for printing on A4 paper",
         generationFunction: makeA4PortraitBadges,
-        isCertificate: false,
+        type: "badge",
         newcomersFirst: true,
         placeholderImage: "assets/a7p-placeholder.png",
         imageDescription: "Background images should be portrait A7 size (74.25mm x 105mm) or 877px x 1241px is recommended. The top 64mm (756px) is available for your competitions logo. The bottom 41mm (485px) is reserved for badge content and this part of your image should be very simple or blank. PNG or JPEG image formats are recommended.",
@@ -40,7 +40,7 @@ const TEMPLATES = [
         name: "4\"x6\" Landscape",
         description: "Individual 4\"x3\" landscape badges and schedule for printing on 4\"x6\" paper",
         generationFunction: makeFourBySixLandscapeBadges,
-        isCertificate: false,
+        type: "badge",
         newcomersFirst: true,
         placeholderImage: "assets/4x6l-placeholder.png",
         imageDescription: "Background images should be half portrait 4x6 size (101.6mm x 76.2mm) or 1200px x 900px is recommended. The top 5400px is available for your competitions logo. The bottom 41mm (485px) is reserved for badge content and this part of your image should be very simple or blank. PNG or JPEG image formats are recommended.",
@@ -49,7 +49,7 @@ const TEMPLATES = [
         name: "4\"x6\" Portrait",
         description: "Individual 4\"x3\" portrait badges and schedule for printing on 4\"x6\" paper",
         generationFunction: makeFourBySixPortraitBadges,
-        isCertificate: false,
+        type: "badge",
         newcomersFirst: true,
         placeholderImage: "assets/4x6p-placeholder.png",
         imageDescription: "Background images should be half portrait 4x6 size (76.2mm x 101.6mm) or 900px x 1200px is recommended. The top 720px is available for your competitions logo. The bottom 41mm (485px) is reserved for badge content and this part of your image should be very simple or blank. PNG or JPEG image formats are recommended.",
@@ -58,7 +58,7 @@ const TEMPLATES = [
         name: "Letter Landscape 2x2",
         description: "4x 4.25\"x2.75\" landscape badges and schedules for printing on US Letter paper",
         generationFunction: makeLetterLandscapeBadges,
-        isCertificate: false,
+        type: "badge",
         newcomersFirst: true,
         placeholderImage: "assets/letterl-placeholder.png",
         imageDescription: "Background images should be 1/4th portrait letter size (107.95mm x 69.85mm) or 1275px x 825px is recommended. The top 495px is available for your competitions logo. The bottom 41mm (485px) is reserved for badge content and this part of your image should be very simple or blank. PNG or JPEG image formats are recommended.",
@@ -67,7 +67,7 @@ const TEMPLATES = [
         name: "Letter Portrait 2x2",
         description: "4x 4.25\"x2.75\" portrait badges and schedules for printing on US Letter paper",
         generationFunction: makeLetterPortraitBadges,
-        isCertificate: false,
+        type: "badge",
         newcomersFirst: true,
         placeholderImage: "assets/letterp-placeholder.png",
         imageDescription: "Background images should be 1/4th portrait letter size (69.85mm x 107.95mm) or 825px x 1275px is recommended. The top 765px is available for your competitions logo. The bottom 41mm (485px) is reserved for badge content and this part of your image should be very simple or blank. PNG or JPEG image formats are recommended.",
@@ -76,7 +76,7 @@ const TEMPLATES = [
         name: "Small Letter Portrait 2x2",
         description: "4x 3.5\"x2.25\" portrait badges and schedules for printing on US Letter paper",
         generationFunction: makeLetterSmallPortraitBadges,
-        isCertificate: false,
+        type: "badge",
         newcomersFirst: true,
         placeholderImage: "assets/letterp-placeholder.png",
         imageDescription: "Background images should be 57.15mm x 88.9mm or 675px x 1050px is recommended. The top 350px is available for your competitions logo. The bottom 325px is reserved for badge content and this part of your image should be very simple or blank. PNG or JPEG image formats are recommended.",
@@ -85,7 +85,7 @@ const TEMPLATES = [
         name: "A5 Championship Portrait",
         description: "Individual A6 portrait badges and schedule for printing on A5 pages, designed for championship events",
         generationFunction: makeChampionshipPortraitBadges,
-        isCertificate: false,
+        type: "badge",
         newcomersFirst: true,
         placeholderImage: "assets/a7p-placeholder.png",
         imageDescription: "Background images should be portrait A6 size (105mm x 148.5mm) or 1241px x 1754px is recommended. The top 90mm (1070px) is available for your competitions logo. The bottom 58.5mm (684px) is reserved for badge content and this part of your image should be very simple or blank. PNG or JPEG image formats are recommended.",
@@ -94,7 +94,7 @@ const TEMPLATES = [
         name: "Participation Certificates",
         description: "Certificate for each competitor for individual A4 pages",
         generationFunction: makeParticipationCertificates,
-        isCertificate: false,
+        type: "badge",
         newcomersFirst: false,
         placeholderImage: "assets/participation-cert.png",
         imageDescription: "Background images should be portrait A4 size (210mm x 297mm) or 2480px x 3508px is recommended. The image should include your competition logo at the top, all organization logos, signatures and background/border elements. PNG or JPEG image formats are recommended.",
@@ -103,14 +103,14 @@ const TEMPLATES = [
         name: "Podium Certificates",
         description: "Landscape certificates for all events",
         generationFunction: makeCertificates,
-        isCertificate: true,
+        type: "certificate",
         newcomersFirst: false,
     },
     {
-        name: "Newcomer Certificates",
-        description: "Landscape certificates for fastest newcomer",
-        generationFunction: makeNewcomerCertificates,
-        isCertificate: true,
+        name: "Custom Certificates",
+        description: "Landscape certificates with a custom event title",
+        generationFunction: makeCustomCertificates,
+        type: "customCertificate",
         newcomersFirst: false,
     },
 ]
@@ -140,6 +140,9 @@ var settings = {
     certPageColor: "#dfefdf",
     certTextColor: "#005400",
     certThinMargins: false,
+    // Custom Certificate settings
+    customCertEventName: "",
+    customCertResultPrefix: "Average of:"
 }
 
 var activities
@@ -357,16 +360,22 @@ function templateChanged(select) {
     settings.template = Number(select.value)
     $("#template-description").text(TEMPLATES[settings.template].description)
 
-    if (TEMPLATES[settings.template].isCertificate) {
-        $(".badge-only").hide()
-        $(".certificate-only").show()
-    } else {
+    if (TEMPLATES[settings.template].type == "badge") {
         $(".badge-only").show()
         $(".certificate-only").hide()
+        $(".custom-certificate-only").hide()
         if (!hasReadBadgeBackgroundImage) {
             $("#badge-img").attr("src", TEMPLATES[settings.template].placeholderImage)
             $("#badge-image-description").text(TEMPLATES[settings.template].imageDescription)
         }
+    } else if (TEMPLATES[settings.template].type == "certificate") {
+        $(".badge-only").hide()
+        $(".certificate-only").show()
+        $(".custom-certificate-only").hide()
+    } else if (TEMPLATES[settings.template].type == "customCertificate") {
+        $(".badge-only").hide()
+        $(".certificate-only").show()
+        $(".custom-certificate-only").show()
     }
 }
 
@@ -451,21 +460,28 @@ $(document).ready(function () {
     // Setup template dropdown
     let option = ''
     for (let i = 0; i < TEMPLATES.length; i++) {
-        if (!TEMPLATES[i].isCertificate) {
+        if (TEMPLATES[i].type == "badge") {
             option += '<option value="' + i + '">' + TEMPLATES[i].name + '</option>'
         }
     }
     option += '<option disabled>──────────</option>'
     for (let i = 0; i < TEMPLATES.length; i++) {
-        if (TEMPLATES[i].isCertificate) {
+        if (TEMPLATES[i].type == "certificate") {
             option += '<option value="' + i + '">' + TEMPLATES[i].name + '</option>'
         }
     }
+    for (let i = 0; i < TEMPLATES.length; i++) {
+        if (TEMPLATES[i].type == "customCertificate") {
+            option += '<option value="' + i + '">' + TEMPLATES[i].name + '</option>'
+        }
+    }
+
     $('#select-template').html(option)
     $('#select-template').val(String(settings.template))
     $("#template-description").text(TEMPLATES[settings.template].description)
 
     $(".certificate-only").hide()
+    $(".custom-certificate-only").hide()
 
     $("#document-preview").hide()
 
