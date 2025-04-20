@@ -1,9 +1,9 @@
 
-var templates = [
+const TEMPLATES = [
     {
         name: "A6 Landscape",
         description: "Individual A7 landscape badges and schedule for printing on A6 paper",
-        generationFunction: MakeA6LandscapeBadges,
+        generationFunction: makeA6LandscapeBadges,
         isCertificate: false,
         newcomersFirst: true,
         placeholderImage: "assets/a7-placeholder.png",
@@ -12,7 +12,7 @@ var templates = [
     {
         name: "A6 Portrait",
         description: "Individual A7 portrait badges and schedule for printing on A6 paper",
-        generationFunction: MakeA6PortraitBadges,
+        generationFunction: makeA6PortraitBadges,
         isCertificate: false,
         newcomersFirst: true,
         placeholderImage: "assets/a7p-placeholder.png",
@@ -21,7 +21,7 @@ var templates = [
     {
         name: "A4 Landscape 2x2",
         description: "4x A7 landscape badges and schedules for printing on A4 paper",
-        generationFunction: MakeA4LandscapeBadges,
+        generationFunction: makeA4LandscapeBadges,
         isCertificate: false,
         newcomersFirst: true,
         placeholderImage: "assets/a7-placeholder.png",
@@ -30,7 +30,7 @@ var templates = [
     {
         name: "A4 Portrait 2x2",
         description: "4x A7 portrait badges and schedules for printing on A4 paper",
-        generationFunction: MakeA4PortraitBadges,
+        generationFunction: makeA4PortraitBadges,
         isCertificate: false,
         newcomersFirst: true,
         placeholderImage: "assets/a7p-placeholder.png",
@@ -39,7 +39,7 @@ var templates = [
     {
         name: "4\"x6\" Landscape",
         description: "Individual 4\"x3\" landscape badges and schedule for printing on 4\"x6\" paper",
-        generationFunction: MakeFourBySixLandscapeBadges,
+        generationFunction: makeFourBySixLandscapeBadges,
         isCertificate: false,
         newcomersFirst: true,
         placeholderImage: "assets/4x6l-placeholder.png",
@@ -48,7 +48,7 @@ var templates = [
     {
         name: "4\"x6\" Portrait",
         description: "Individual 4\"x3\" portrait badges and schedule for printing on 4\"x6\" paper",
-        generationFunction: MakeFourBySixPortraitBadges,
+        generationFunction: makeFourBySixPortraitBadges,
         isCertificate: false,
         newcomersFirst: true,
         placeholderImage: "assets/4x6p-placeholder.png",
@@ -57,7 +57,7 @@ var templates = [
     {
         name: "Letter Landscape 2x2",
         description: "4x 4.25\"x2.75\" landscape badges and schedules for printing on US Letter paper",
-        generationFunction: MakeLetterLandscapeBadges,
+        generationFunction: makeLetterLandscapeBadges,
         isCertificate: false,
         newcomersFirst: true,
         placeholderImage: "assets/letterl-placeholder.png",
@@ -66,7 +66,7 @@ var templates = [
     {
         name: "Letter Portrait 2x2",
         description: "4x 4.25\"x2.75\" portrait badges and schedules for printing on US Letter paper",
-        generationFunction: MakeLetterPortraitBadges,
+        generationFunction: makeLetterPortraitBadges,
         isCertificate: false,
         newcomersFirst: true,
         placeholderImage: "assets/letterp-placeholder.png",
@@ -75,7 +75,7 @@ var templates = [
     {
         name: "Small Letter Portrait 2x2",
         description: "4x 3.5\"x2.25\" portrait badges and schedules for printing on US Letter paper",
-        generationFunction: MakeLetterSmallPortraitBadges,
+        generationFunction: makeLetterSmallPortraitBadges,
         isCertificate: false,
         newcomersFirst: true,
         placeholderImage: "assets/letterp-placeholder.png",
@@ -84,7 +84,7 @@ var templates = [
     {
         name: "A5 Championship Portrait",
         description: "Individual A6 portrait badges and schedule for printing on A5 pages, designed for championship events",
-        generationFunction: MakeChampionshipPortraitBadges,
+        generationFunction: makeChampionshipPortraitBadges,
         isCertificate: false,
         newcomersFirst: true,
         placeholderImage: "assets/a7p-placeholder.png",
@@ -93,7 +93,7 @@ var templates = [
     {
         name: "Participation Certificates",
         description: "Certificate for each competitor for individual A4 pages",
-        generationFunction: MakeParticipationCertificates,
+        generationFunction: makeParticipationCertificates,
         isCertificate: false,
         newcomersFirst: false,
         placeholderImage: "assets/participation-cert.png",
@@ -102,14 +102,14 @@ var templates = [
     {
         name: "Podium Certificates",
         description: "Landscape certificates for all events",
-        generationFunction: MakeCertificates,
+        generationFunction: makeCertificates,
         isCertificate: true,
         newcomersFirst: false,
     },
     {
         name: "Newcomer Certificates",
         description: "Landscape certificates for fastest newcomer",
-        generationFunction: MakeNewcomerCertificates,
+        generationFunction: makeNewcomerCertificates,
         isCertificate: true,
         newcomersFirst: false,
     },
@@ -140,52 +140,56 @@ var settings = {
     certPageColor: "#dfefdf",
     certTextColor: "#005400",
     certThinMargins: false,
-} 
+}
+
+var activities
+var wcif
+var hasReadBadgeBackgroundImage = false
+var qrcode
 
 // Set status text
-const STATUS_MODE_INFO = 0;
-const STATUS_MODE_WARN = 1;
-const STATUS_MODE_ERROR = 2;
-function SetStatus(text, mode) {
-    $("#status").removeClass();
-    $("#status").text(text);
+const STATUS_MODE_INFO = 0
+const STATUS_MODE_WARN = 1
+const STATUS_MODE_ERROR = 2
+function setStatus(text, mode) {
+    $("#status").removeClass()
+    $("#status").text(text)
     if (mode == STATUS_MODE_WARN) {
-        $("#status").addClass("warn");
+        $("#status").addClass("warn")
     } else if (mode == STATUS_MODE_ERROR) {
-        $("#status").addClass("error");
+        $("#status").addClass("error")
     } else {
-        $("#status").addClass("info");
+        $("#status").addClass("info")
     }
 }
 
-function SetWCIFStatus(text, mode) {
-    $("#wcif-status").removeClass();
-    $("#wcif-status").text(text);
+function setWcifStatus(text, mode) {
+    $("#wcif-status").removeClass()
+    $("#wcif-status").text(text)
     if (mode == STATUS_MODE_WARN) {
-        $("#wcif-status").addClass("warn");
+        $("#wcif-status").addClass("warn")
     } else if (mode == STATUS_MODE_ERROR) {
-        $("#wcif-status").addClass("error");
+        $("#wcif-status").addClass("error")
     } else {
-        $("#wcif-status").addClass("info");
+        $("#wcif-status").addClass("info")
     }
 }
-var activities;
-var wcif;
-function GetActivities() {
+
+function getActivities() {
     // Reorganise activity information
     activities = {}
-    for (var v=0; v<wcif.schedule.venues.length; v++) {
-        var venue = wcif.schedule.venues[v];
-        for (var r=0; r<venue.rooms.length; r++) {
-            var room = venue.rooms[r];
-            for (var a=0; a<room.activities.length; a++) {
-                var activity = room.activities[a];
+    for (var v = 0; v < wcif.schedule.venues.length; v++) {
+        var venue = wcif.schedule.venues[v]
+        for (var r = 0; r < venue.rooms.length; r++) {
+            var room = venue.rooms[r]
+            for (var a = 0; a < room.activities.length; a++) {
+                var activity = room.activities[a]
 
                 // Room color is a mix between room color and white for visibility
-                var roomColor = HexToRgb(room.color);
-                roomColor[0] = (255 + roomColor[0]) / 2;
-                roomColor[1] = (255 + roomColor[1]) / 2;
-                roomColor[2] = (255 + roomColor[2]) / 2;
+                var roomColor = hexToRgb(room.color)
+                roomColor[0] = (255 + roomColor[0]) / 2
+                roomColor[1] = (255 + roomColor[1]) / 2
+                roomColor[2] = (255 + roomColor[2]) / 2
 
                 activities[activity.id] = {
                     parentActivityCode: activity.activityCode,
@@ -193,12 +197,12 @@ function GetActivities() {
                     roundStartTime: activity.startTime,
                     roundEndTime: activity.endTime,
                     timezone: venue.timezone,
-                    roomName: room.name, 
-                    roomColor: roomColor, 
+                    roomName: room.name,
+                    roomColor: roomColor,
                 }
 
-                for (var c=0; c<activity.childActivities.length; c++) {
-                    var childActivity = activity.childActivities[c];
+                for (var c = 0; c < activity.childActivities.length; c++) {
+                    var childActivity = activity.childActivities[c]
 
                     activities[childActivity.id] = {
                         parentActivityCode: activity.activityCode,
@@ -206,8 +210,8 @@ function GetActivities() {
                         roundStartTime: activity.startTime,
                         roundEndTime: activity.endTime,
                         timezone: venue.timezone,
-                        roomName: room.name, 
-                        roomColor: roomColor, 
+                        roomName: room.name,
+                        roomColor: roomColor,
                     }
                 }
             }
@@ -216,115 +220,113 @@ function GetActivities() {
 }
 
 // Load images of all the countries referenced in the WCIF
-function LoadCountryFlags() {
+function loadCountryFlags() {
     var flags = {}
 
     for (var person in wcif.persons) {
-        var code = wcif.persons[person].countryIso2.toLowerCase();
+        var code = wcif.persons[person].countryIso2.toLowerCase()
         if (flags[code] == undefined) {
-            flags[code] = true;
+            flags[code] = true
             var flagElement = $(`<img style="display: none;" id='${code}-flag' src='${getCountryFlag(code)}'/>`)
-            $("#hidden-images").append(flagElement);
+            $("#hidden-images").append(flagElement)
             console.log(`Added flag: ${code}`)
         }
     }
 }
 
 // Load a WCIF file from the user
-function ReadWCIF(input) {
+function readWCIF(input) {
     // Get file
-    let file = input.files[0]; 
-    let fileReader = new FileReader(); 
-    fileReader.readAsText(file); 
-    fileReader.onload = function() {
+    let file = input.files[0];
+    let fileReader = new FileReader();
+    fileReader.readAsText(file);
+    fileReader.onload = function () {
         // Check WCIF
         try {
-            wcif = JSON.parse(fileReader.result);
-            $("#wcifFileLabel").text(file.name);
+            wcif = JSON.parse(fileReader.result)
+            $("#wcifFileLabel").text(file.name)
 
-            GetActivities();
-            LoadCountryFlags();
+            getActivities()
+            loadCountryFlags()
         } catch {
-            SetWCIFStatus("Invalid WCIF file provided: Couldn't parse JSON", STATUS_MODE_ERROR);
-            return;
+            setWcifStatus("Invalid WCIF file provided: Couldn't parse JSON", STATUS_MODE_ERROR)
+            return
         }
         if (wcif == undefined) {
-            SetWCIFStatus("Invalid WCIF file provided: Couldn't parse JSON", STATUS_MODE_ERROR);
-            return;
+            setWcifStatus("Invalid WCIF file provided: Couldn't parse JSON", STATUS_MODE_ERROR)
+            return
         }
 
-        SetWCIFStatus("Loaded WCIF file", STATUS_MODE_INFO);
-    }; 
-    fileReader.onerror = function() {
-        SetWCIFStatus("Couldn't read WCIF file", STATUS_MODE_ERROR);
-    }; 
+        setWcifStatus("Loaded WCIF file", STATUS_MODE_INFO)
+    };
+    fileReader.onerror = function () {
+        setWcifStatus("Couldn't read WCIF file", STATUS_MODE_ERROR)
+    };
 }
 
-function FetchWCIF() {
-    SetWCIFStatus("Fetching WCIF...", STATUS_MODE_INFO);
+function fetchWCIF() {
+    setWcifStatus("Fetching WCIF...", STATUS_MODE_INFO)
     setTimeout(() => {
-        let id = $("#wcif-compid")[0].value;
-        let url = `https://www.worldcubeassociation.org/api/v0/competitions/${id}/wcif/public`;
-        let request = new XMLHttpRequest();
-        request.open('GET', url, false);
-        request.send();
+        let id = $("#wcif-compid")[0].value
+        let url = `https://www.worldcubeassociation.org/api/v0/competitions/${id}/wcif/public`
+        let request = new XMLHttpRequest()
+        request.open('GET', url, false)
+        request.send()
 
         if (request.status === 200) {
             try {
-                wcif = JSON.parse(request.response);
-                SetWCIFStatus("Loaded WCIF", STATUS_MODE_INFO);
-                GetActivities();
-                LoadCountryFlags();
+                wcif = JSON.parse(request.response)
+                setWcifStatus("Loaded WCIF", STATUS_MODE_INFO)
+                getActivities()
+                loadCountryFlags()
             } catch (error) {
                 console.error(error)
-                SetWCIFStatus("Invalid WCIF ", STATUS_MODE_ERROR);
+                setWcifStatus("Invalid WCIF ", STATUS_MODE_ERROR)
             }
         } else {
-            SetWCIFStatus("Loaded demo WCIF file", STATUS_MODE_ERROR);
+            setWcifStatus("Loaded demo WCIF file", STATUS_MODE_ERROR)
         }
-    }, 100);
+    }, 100)
 }
 
-function UseDemoWCIF() {
-    wcif = demoWcif;
-    SetWCIFStatus("Loaded demo WCIF", STATUS_MODE_INFO);
-    GetActivities();
-    LoadCountryFlags();
+function useDemoWCIF() {
+    wcif = DEMO_WCIF
+    setWcifStatus("Loaded demo WCIF", STATUS_MODE_INFO)
+    getActivities()
+    loadCountryFlags()
 }
-
 
 // Read badge background image from user
-var hasReadBadgeBackgroundImage = false;
-function ReadBadgeBackgroundImage(input) {
-    let file = input.files[0]; 
-    let fileReader = new FileReader(); 
-    fileReader.readAsDataURL(file); 
-    fileReader.onload = function() {
-        $("#badge-img").attr("src", fileReader.result);
-        $("#badgeBackgroundImgLabel").text(file.name);
+function readBadgeBackgroundImage(input) {
+    let file = input.files[0];
+    let fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = function () {
+        $("#badge-img").attr("src", fileReader.result)
+        $("#badgeBackgroundImgLabel").text(file.name)
 
-        hasReadBadgeBackgroundImage = true;
-        SetStatus("Updated badge background image", STATUS_MODE_INFO);
-    }; 
-    fileReader.onerror = function() {
-        SetStatus("Couldn't read image file", STATUS_MODE_ERROR);
-    }; 
+        hasReadBadgeBackgroundImage = true
+        setStatus("Updated badge background image", STATUS_MODE_INFO)
+    };
+    fileReader.onerror = function () {
+        setStatus("Couldn't read image file", STATUS_MODE_ERROR)
+    };
 }
 
 // Read certificate background image from user
-function ReadCertBackgroundImage(input) {
-    let file = input.files[0]; 
-    let fileReader = new FileReader(); 
-    fileReader.readAsDataURL(file); 
-    fileReader.onload = function() {
-        $("#certificate-img").attr("src", fileReader.result);
-        $("#certBackgroundImgLabel").text(file.name);
+function readCertBackgroundImage(input) {
+    let file = input.files[0];
+    let fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = function () {
+        $("#certificate-img").attr("src", fileReader.result)
+        $("#certBackgroundImgLabel").text(file.name)
 
-        SetStatus("Updated certificate background image", STATUS_MODE_INFO);
-    }; 
-    fileReader.onerror = function() {
-        SetStatus("Couldn't read image file", STATUS_MODE_ERROR);
-    }; 
+        setStatus("Updated certificate background image", STATUS_MODE_INFO)
+    };
+    fileReader.onerror = function () {
+        setStatus("Couldn't read image file", STATUS_MODE_ERROR)
+    };
 
     $("#cert-background-tint-input").data().colorpicker.setValue("#FFFFFF")
     $("#cert-page-color-input").data().colorpicker.setValue("#FFFFFF")
@@ -332,153 +334,152 @@ function ReadCertBackgroundImage(input) {
 }
 
 // Read organization image from user
-function ReadOrganizationImage(input) {
-    let file = input.files[0]; 
-    let fileReader = new FileReader(); 
-    fileReader.readAsDataURL(file); 
-    fileReader.onload = function() {
-        organizationImage = fileReader.result;
+function readOrganizationImage(input) {
+    let file = input.files[0];
+    let fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = function () {
+        organizationImage = fileReader.result
 
         // Add organization image css to style badges
-        $("#org-img").attr("src",organizationImage);
-        $("#orgLogoLabel").text(file.name);
+        $("#org-img").attr("src", organizationImage)
+        $("#orgLogoLabel").text(file.name)
 
-        SetStatus("Updated organization image", STATUS_MODE_INFO);
-    }; 
-    fileReader.onerror = function() {
-        SetStatus("Couldn't read image file", STATUS_MODE_ERROR);
-    }; 
+        setStatus("Updated organization image", STATUS_MODE_INFO)
+    };
+    fileReader.onerror = function () {
+        setStatus("Couldn't read image file", STATUS_MODE_ERROR)
+    };
 }
 
 // Template has been selected, chang settings and UI
-function TemplateChanged(select) {
-    settings.template = Number(select.value);
-    $("#template-description").text(templates[settings.template].description);
-    
-    if (templates[settings.template].isCertificate) {
-        $(".badge-only").hide();
-        $(".certificate-only").show();
+function templateChanged(select) {
+    settings.template = Number(select.value)
+    $("#template-description").text(TEMPLATES[settings.template].description)
+
+    if (TEMPLATES[settings.template].isCertificate) {
+        $(".badge-only").hide()
+        $(".certificate-only").show()
     } else {
-        $(".badge-only").show();
-        $(".certificate-only").hide();
+        $(".badge-only").show()
+        $(".certificate-only").hide()
         if (!hasReadBadgeBackgroundImage) {
-            $("#badge-img").attr("src", templates[settings.template].placeholderImage);
-            $("#badge-image-description").text(templates[settings.template].imageDescription);
+            $("#badge-img").attr("src", TEMPLATES[settings.template].placeholderImage)
+            $("#badge-image-description").text(TEMPLATES[settings.template].imageDescription)
         }
     }
 }
 
 // Template has been selected, chang settings and UI
-function UseCustomColorChanged() {
+function useCustomColorChanged() {
     if (settings.customScheduleColors) {
-        $("#customColors").show();
+        $("#customColors").show()
     } else {
-        $("#customColors").hide();
+        $("#customColors").hide()
     }
 }
 
-var qrcode
-function UpdateQRCode() {
-    qrcode.makeCode(settings.qrcodeLink);
+function updateQrCode() {
+    qrcode.makeCode(settings.qrcodeLink)
 }
 
-function PreviewDocument() {
-    SetStatus("Generating PDF...", STATUS_MODE_INFO);
-    settings.customScheduleColorsCode = $("#customColorsCode").val();
-    let imgsrc = document.getElementById("qrcode-gen").children[1].src;
-    document.getElementById("qrcode-img").src = imgsrc;
+function previewDocument() {
+    setStatus("Generating PDF...", STATUS_MODE_INFO)
+    settings.customScheduleColorsCode = $("#customColorsCode").val()
+    let imgsrc = document.getElementById("qrcode-gen").children[1].src
+    document.getElementById("qrcode-img").src = imgsrc
     setTimeout(() => {
         try {
-            var error = !MakeDocument(true);
+            var error = !makeDocument(true)
             if (!error) {
                 // Don't allow document to be printed
-                $("#print-button").prop("disabled", true);
+                $("#print-button").prop("disabled", true)
 
                 var blob = globalDoc.output('blob')
-                var blob_url = URL.createObjectURL(blob);
+                var blob_url = URL.createObjectURL(blob)
                 $("#document-preview").attr("src", blob_url)
-                $("#document-preview").show();
-                
-                SetStatus("PDF ready!", STATUS_MODE_INFO);
+                $("#document-preview").show()
+
+                setStatus("PDF ready!", STATUS_MODE_INFO)
             }
         } catch (e) {
             console.error(e)
-            $("#print-button").prop("disabled", true);
-            SetStatus("PDF failed to generate", STATUS_MODE_ERROR);
+            $("#print-button").prop("disabled", true)
+            setStatus("PDF failed to generate", STATUS_MODE_ERROR)
         }
-    }, 100);
+    }, 100)
 }
 
-function GenerateDocument() {
-    SetStatus("Generating PDF...", STATUS_MODE_INFO);
-    settings.customScheduleColorsCode = $("#customColorsCode").val();
-    let imgsrc = document.getElementById("qrcode-gen").children[1].src;
-    document.getElementById("qrcode-img").src = imgsrc;
+function generateDocument() {
+    setStatus("Generating PDF...", STATUS_MODE_INFO)
+    settings.customScheduleColorsCode = $("#customColorsCode").val()
+    let imgsrc = document.getElementById("qrcode-gen").children[1].src
+    document.getElementById("qrcode-img").src = imgsrc
     setTimeout(() => {
         try {
-            var error = !MakeDocument();
+            var error = !makeDocument()
             if (!error) {
                 // Allow document to be printed
-                $("#print-button").prop("disabled", false);
+                $("#print-button").prop("disabled", false)
 
                 var blob = globalDoc.output('blob')
-                var blob_url = URL.createObjectURL(blob);
+                var blob_url = URL.createObjectURL(blob)
                 $("#document-preview").attr("src", blob_url)
-                $("#document-preview").show();
-                
-                SetStatus("PDF ready!", STATUS_MODE_INFO);
+                $("#document-preview").show()
+
+                setStatus("PDF ready!", STATUS_MODE_INFO)
             }
         } catch (e) {
             console.error(e)
-            $("#print-button").prop("disabled", true);
-            SetStatus("PDF failed to generate", STATUS_MODE_ERROR);
+            $("#print-button").prop("disabled", true)
+            setStatus("PDF failed to generate", STATUS_MODE_ERROR)
         }
-    }, 100);
+    }, 100)
 }
 
 
-function PrintDocument() {
-    const competitionId = wcif?.id || "Badges";
-    const templateName = templates[settings.template]?.name
-        ? templates[settings.template].name.replace(/[^a-zA-Z0-9]/g, '_')
-        : "Badges";
-    globalDoc.save(`${competitionId}_${templateName}.pdf`);
+function printDocument() {
+    const competitionId = wcif?.id || "Badges"
+    const templateName = TEMPLATES[settings.template]?.name
+        ? TEMPLATES[settings.template].name.replace(/[^a-zA-Z0-9]/g, '_')
+        : "Badges"
+    globalDoc.save(`${competitionId}_${templateName}.pdf`)
 }
 
 
 $(document).ready(function () {
     // Setup template dropdown
-    var option = '';
-    for (var i=0;i<templates.length;i++) {
-        if (!templates[i].isCertificate) {
-            option += '<option value="' + i + '">' + templates[i].name + '</option>';
+    let option = ''
+    for (let i = 0; i < TEMPLATES.length; i++) {
+        if (!TEMPLATES[i].isCertificate) {
+            option += '<option value="' + i + '">' + TEMPLATES[i].name + '</option>'
         }
     }
     option += '<option disabled>──────────</option>'
-    for (var i=0;i<templates.length;i++) {
-        if (templates[i].isCertificate) {
-            option += '<option value="' + i + '">' + templates[i].name + '</option>';
+    for (let i = 0; i < TEMPLATES.length; i++) {
+        if (TEMPLATES[i].isCertificate) {
+            option += '<option value="' + i + '">' + TEMPLATES[i].name + '</option>'
         }
     }
-    $('#select-template').html(option);
-    $('#select-template').val(String(settings.template));
-    $("#template-description").text(templates[settings.template].description);
+    $('#select-template').html(option)
+    $('#select-template').val(String(settings.template))
+    $("#template-description").text(TEMPLATES[settings.template].description)
 
-    $(".certificate-only").hide();
+    $(".certificate-only").hide()
 
-    $("#document-preview").hide();
+    $("#document-preview").hide()
 
     $("#cert-background-tint-input").colorpicker({
         color: settings.certBackgroundTint
-    });
+    })
     $("#cert-page-color-input").colorpicker({
         color: settings.certPageColor
-    });
+    })
     $("#cert-text-color-input").colorpicker({
         color: settings.certTextColor
-    });
+    })
 
-    UseCustomColorChanged();
+    useCustomColorChanged()
     $("#customColorsCode").val(`// Input variables
 // event: string; the event code (e.g '333', 'pyra')
 // group: number; the group number, 1 or higher. If no group, then null
@@ -497,15 +498,15 @@ if (event == "333mbf" || event == "444bf" || event == "555bf") {
     color = "#FFB0B0" // Even groups, red
 } else {
     color = "#B0FFB0" // Odd groups, green
-}`);
+}`)
 
     qrcode = new QRCode("qrcode-gen", {
         text: settings.qrcodeLink,
         width: 512,
         height: 512,
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.M
-    });
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.M
+    })
 
-});
+})
