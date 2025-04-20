@@ -170,25 +170,25 @@
                     <span class="badge-only">
                         <p>Schedule Columns</p>
                         <div class="form-check">
-                            <input checked class="form-check-input" type="checkbox" id="includeTimes" onclick="settings.includeTimes = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="includeTimes" onclick="settings.includeTimes = this.checked">
                             <label class="form-check-label" for="includeTimes">
                                 Include times in schedules   
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="includeStages" onclick="settings.includeStages = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="includeStages" onclick="settings.includeStages = this.checked">
                             <label class="form-check-label" for="includeStages">
                                 Include stages in schedules
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="includeStations" onclick="settings.includeStations = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="includeStations" onclick="settings.includeStations = this.checked">
                             <label class="form-check-label" for="includeStations">
                                 Include stations in schedules
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="includeStaffing" onclick="settings.includeStaffing = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="includeStaffing" onclick="settings.includeStaffing = this.checked">
                             <label class="form-check-label" for="includeStaffing">
                                 Include staffing in schedules
                             </label>
@@ -196,25 +196,25 @@
                         <hr>
                         <p>Options</p>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="includeLocalName" onclick="settings.includeLocalName = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="includeLocalName" onclick="settings.includeLocalName = this.checked">
                             <label class="form-check-label" for="includeLocalName">
                                 Include local names
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="includeCompetitorId" onclick="settings.includeCompetitorId = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="includeCompetitorId" onclick="settings.includeCompetitorId = this.checked">
                             <label class="form-check-label" for="includeCompetitorId">
                                 Include competitor ID on front  
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="hideStaffOnly" onclick="settings.hideStaffOnlyAssignments = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="hideStaffOnly" onclick="settings.hideStaffOnlyAssignments = this.checked">
                             <label class="form-check-label" for="hideStaffOnly">
                                 Hide staff only assignments in schedule
                             </label>
                         </div>
                         <div class="form-check">
-                            <input checked class="form-check-input" type="checkbox" id="includeQRCode" onclick="settings.showWcaLiveQrCode = this.checked">
+                            <input autocomplete="off" checked class="form-check-input" type="checkbox" id="includeQRCode" onclick="settings.showWcaLiveQrCode = this.checked">
                             <label class="form-check-label" for="includeQRCode">
                                 Include QR code with schedules
                             </label>
@@ -223,22 +223,22 @@
                             <div class="input-group-prepend">
                             <span class="input-group-text">Link for QR Code</span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Link" value="https://live.worldcubeassociation.org/" onchange="settings.qrcodeLink = this.value" onblur="updateQrCode()">
+                            <input autocomplete="off" type="text" class="form-control" placeholder="Link" value="https://live.worldcubeassociation.org/" onchange="settings.qrcodeLink = this.value" onblur="updateQrCode()">
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                             <span class="input-group-text">QR Code Message</span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Message" value= "Live results and full schedule available on WCA Live. Good luck and have fun!" onchange="settings.qrcodeMessage = this.value">
+                            <input autocomplete="off" type="text" class="form-control" placeholder="Message" value= "Live results and full schedule available on WCA Live. Good luck and have fun!" onchange="settings.qrcodeMessage = this.value">
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="colorFromStage" onclick="settings.colorFromStage = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="colorFromStage" onclick="settings.colorFromStage = this.checked">
                             <label class="form-check-label" for="colorFromStage">
                                 Color rows based on stage color
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="customScheduleColors" onclick="settings.customScheduleColors = this.checked" onchange="useCustomColorChanged()">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="customScheduleColors" onclick="settings.customScheduleColors = this.checked" onchange="useCustomColorChanged()">
                             <label class="form-check-label" for="customScheduleColors">
                                 Use custom row colors in schedules
                             </label>
@@ -255,7 +255,7 @@
                                 <span class="input-group-text">Background Tint</span>
                                 <span class="input-group-text colorpicker-input-addon"><i></i></span>
                             </div>
-                            <input type="text" class="form-control" onchange="settings.certBackgroundTint = this.value"/>
+                            <input autocomplete="off" type="text" class="form-control" onchange="settings.certBackgroundTint = this.value"/>
                         </div>
 
                         <div id="cert-page-color-input" class="input-group mb-3 certificate-only">
@@ -263,7 +263,7 @@
                                 <span class="input-group-text">Page Color</span>
                                 <span class="input-group-text colorpicker-input-addon"><i></i></span>
                             </div>
-                            <input type="text" class="form-control" onchange="settings.certPageColor = this.value"/>
+                            <input autocomplete="off" type="text" class="form-control" onchange="settings.certPageColor = this.value"/>
                         </div>
 
                         <div id="cert-text-color-input" class="input-group mb-3 certificate-only">
@@ -271,7 +271,7 @@
                                 <span class="input-group-text">Text Color</span>
                                 <span class="input-group-text colorpicker-input-addon"><i></i></span>
                             </div>
-                            <input type="text" class="form-control" onchange="settings.certTextColor = this.value"/>
+                            <input autocomplete="off" type="text" class="form-control" onchange="settings.certTextColor = this.value"/>
                         </div>
 
                         <hr>
@@ -280,18 +280,18 @@
                             <div class="input-group-prepend">
                             <span class="input-group-text">Signature Name for Certificate</span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Name" onchange="settings.certOrganiser = this.value">
+                            <input autocomplete="off" type="text" class="form-control" placeholder="Name" onchange="settings.certOrganiser = this.value">
                         </div>
 
                         <div class="input-group mb-3 certificate-only">
                             <div class="input-group-prepend">
                             <span class="input-group-text">Signature Role for Certificate</span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Role" value="WCA DELEGATE" onchange="settings.certRole = this.value">
+                            <input autocomplete="off" type="text" class="form-control" placeholder="Role" value="WCA DELEGATE" onchange="settings.certRole = this.value">
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="thinMargins" onclick="settings.certThinMargins = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="thinMargins" onclick="settings.certThinMargins = this.checked">
                             <label class="form-check-label" for="thinMargins">
                                 Reduce margin between logos and edge of page
                             </label>
