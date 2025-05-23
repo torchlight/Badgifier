@@ -1,17 +1,17 @@
 
 // Week day to text
-const weekDaysMap = [
-    "Sunday", 
-    "Monday", 
-    "Tuesday", 
-    "Wednesday", 
-    "Thursday", 
-    "Friday", 
-    "Saturday", 
+const WEEK_DAYS_MAP = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
 ]
 
 // Event code to full name
-const eventMap = {
+const EVENT_MAP = {
     "222": "2x2x2",
     "333": "3x3x3",
     "333fm": "3x3x3 Fewest Moves",
@@ -33,29 +33,29 @@ const eventMap = {
     "other": "Other",
 }
 
-const eventCount = 18;
-const eventOrder = {
-    "333":0,
-    "222":1,
-    "444":2,
-    "555":3,
-    "666":4,
-    "777":5,
-    "333bf":6,
-    "333fm":7,
-    "333oh":8,
-    "clock":9,
-    "minx":10,
-    "pyram":11,
-    "skewb":12,
-    "sq1":13,
-    "444bf":14,
-    "555bf":15,
-    "333mbf":16,
-    "333ft":17,
+const EVENT_COUNT = 18
+const EVENT_ORDER = {
+    "333": 0,
+    "222": 1,
+    "444": 2,
+    "555": 3,
+    "666": 4,
+    "777": 5,
+    "333bf": 6,
+    "333fm": 7,
+    "333oh": 8,
+    "clock": 9,
+    "minx": 10,
+    "pyram": 11,
+    "skewb": 12,
+    "sq1": 13,
+    "444bf": 14,
+    "555bf": 15,
+    "333mbf": 16,
+    "333ft": 17,
 }
 
-const eventOrderName = [
+const EVENT_ORDER_NAME = [
     "333",
     "222",
     "444",
@@ -77,47 +77,47 @@ const eventOrderName = [
 ]
 
 // Award place to text
-const placeMap = [
-    "First Place awarded to:", 
-    "Second Place awarded to:", 
-    "Third Place awarded to:",  
+const PLACE_MAP = [
+    "First Place awarded to:",
+    "Second Place awarded to:",
+    "Third Place awarded to:",
 ]
 
 // Format code to event result prefix text
-const eventFormatMap = {
-    "a":"Average time of:",
-    "m":"Mean time of:",
-    "1":"Best time of:",
-    "2":"Best time of:",
-    "3":"Best time of:",
+const EVENT_FORMAT_MAP = {
+    "a": "Average time of:",
+    "m": "Mean time of:",
+    "1": "Best time of:",
+    "2": "Best time of:",
+    "3": "Best time of:",
 }
 
-const eventCharacters = {
-    "333":"\u{E601}",
-    "222":"\u{E600}",
-    "444":"\u{E607}",
-    "555":"\u{E609}",
-    "666":"\u{E60B}",
-    "777":"\u{E60C}",
-    "333bf":"\u{E602}",
-    "333fm":"\u{E603}",
-    "333oh":"\u{E606}",
-    "clock":"\u{E60D}",
-    "minx":"\u{E60E}",
-    "pyram":"\u{E60F}",
-    "skewb":"\u{E610}",
-    "sq1":"\u{E611}",
-    "444bf":"\u{E608}",
-    "555bf":"\u{E60A}",
-    "333mbf":"\u{E605}",
-    "333ft":"\u{E604}",
+const EVENT_CHARACTERS = {
+    "333": "\u{E601}",
+    "222": "\u{E600}",
+    "444": "\u{E607}",
+    "555": "\u{E609}",
+    "666": "\u{E60B}",
+    "777": "\u{E60C}",
+    "333bf": "\u{E602}",
+    "333fm": "\u{E603}",
+    "333oh": "\u{E606}",
+    "clock": "\u{E60D}",
+    "minx": "\u{E60E}",
+    "pyram": "\u{E60F}",
+    "skewb": "\u{E610}",
+    "sq1": "\u{E611}",
+    "444bf": "\u{E608}",
+    "555bf": "\u{E60A}",
+    "333mbf": "\u{E605}",
+    "333ft": "\u{E604}",
 }
 
 // Special case text for certain events
-const multiblindFormatText = "Best result:"
-const fewestMovesFormatText = "Moves:"
+const MULTIBLIND_FORMAT_TEXT = "Best result:"
+const FEWEST_MOVES_FORMAT_TEXT = "Moves:"
 
-const localizedNames = {
+const LOCALIZED_NAMES = {
     AG: "Antigua and Barbuda",
     BA: "Bosnia and Herzegovina",
     CD: "Democratic Republic of the Congo",
@@ -150,26 +150,26 @@ const localizedNames = {
     XW: "Multiple Countries (World)",
 }
 
-const localizedFlags = {
+const LOCALIZED_FLAGS = {
     TW: "./assets/ChineseTaipeiSquared.png",
 }
 
-const noFlagBorders = {
+const NO_FLAG_BORDERS = {
     NP: false,
     TW: false,
 }
 
 function getCountryFlag(code) {
-    if (localizedFlags[code.toUpperCase()] == undefined) {
+    if (LOCALIZED_FLAGS[code.toUpperCase()] == undefined) {
         return `https://flagcdn.com/h240/${code}.png`
     }
-    return localizedFlags[code.toUpperCase()]
+    return LOCALIZED_FLAGS[code.toUpperCase()]
 }
 
-let regionNames = new Intl.DisplayNames(['en'], {type: 'region'});
+let regionNames = new Intl.DisplayNames(['en'], { type: 'region' })
 function getCountryName(code) {
-    if (localizedNames[code] == undefined) {
+    if (LOCALIZED_NAMES[code] == undefined) {
         return regionNames.of(code.toUpperCase())
     }
-    return localizedNames[code.toUpperCase()]
+    return LOCALIZED_NAMES[code.toUpperCase()]
 }

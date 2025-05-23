@@ -32,8 +32,8 @@
         Badgifier | Dallas McNeil
     </title>
     <link rel="stylesheet" type="text/css" href="./scss/style.css">
-    <link rel="stylesheet" type="text/css" href="./lib/cubingIcons.css">
-    <link rel="stylesheet" type="text/css" href="./lib/bootstrap-colorpicker.min.css">
+    <link rel="stylesheet" type="text/css" href="./js/lib/cubingIcons.css">
+    <link rel="stylesheet" type="text/css" href="./js/lib/bootstrap-colorpicker.min.css">
 </head>
 <body>
 
@@ -81,7 +81,7 @@
                         </div>
                         <input id="wcif-compid" type="text" class="form-control" placeholder="ID (e.g SouthAustralianOpen2022)" value="">
                     </div>
-                    <button class="btn btn-secondary" onclick="FetchWCIF()">Fetch WCIF</button>
+                    <button class="btn btn-secondary" onclick="fetchWCIF()">Fetch WCIF</button>
                     <hr>
                     <h5>Upload WCIF</h3>
                     <p>
@@ -92,7 +92,7 @@
                           <span class="input-group-text">Upload WCIF</span>
                         </div>
                         <div class="custom-file">
-                          <input type="file" class="custom-file-input" id="wcifFile" onchange="ReadWCIF(this)">
+                          <input type="file" class="custom-file-input" id="wcifFile" onchange="readWCIF(this)">
                           <label class="custom-file-label" id="wcifFileLabel" for="wcifFile">Choose file...</label>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
                     <p>
                         Use a demo WCIF file and see what Badgifier can do!
                     </p>
-                    <button class="btn btn-secondary" onclick="UseDemoWCIF()">Use Example WCIF</button>
+                    <button class="btn btn-secondary" onclick="useDemoWCIF()">Use Example WCIF</button>
                 </div>
             </div>
             
@@ -113,7 +113,7 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" for="select-template">Format</label>
                         </div>
-                        <select class="custom-select" id="select-template" onchange="TemplateChanged(this)">
+                        <select class="custom-select" id="select-template" onchange="templateChanged(this)">
                         </select>
                     </div>
 
@@ -127,7 +127,7 @@
                               <span class="input-group-text">Upload Background Image</span>
                             </div>
                             <div class="custom-file">
-                              <input type="file" class="custom-file-input" id="badgeBackgroundImage" onchange="ReadBadgeBackgroundImage(this)">
+                              <input type="file" class="custom-file-input" id="badgeBackgroundImage" onchange="readBadgeBackgroundImage(this)">
                               <label class="custom-file-label" id="badgeBackgroundImgLabel" for="badgeBackgroundImage">Choose image...</label>
                             </div>
                         </div>
@@ -141,7 +141,7 @@
                               <span class="input-group-text">Upload Background Image</span>
                             </div>
                             <div class="custom-file">
-                              <input type="file" class="custom-file-input" id="certBackgroundImage" onchange="ReadCertBackgroundImage(this)">
+                              <input type="file" class="custom-file-input" id="certBackgroundImage" onchange="readCertBackgroundImage(this)">
                               <label class="custom-file-label" id="certBackgroundImgLabel" for="certBackgroundImage">cert-border.png</label>
                             </div>
                         </div>
@@ -157,7 +157,7 @@
                           <span class="input-group-text">Upload Organization Logo</span>
                         </div>
                         <div class="custom-file">
-                          <input type="file" class="custom-file-input" id="orgLogoUpload" onchange="ReadOrganizationImage(this)">
+                          <input type="file" class="custom-file-input" id="orgLogoUpload" onchange="readOrganizationImage(this)">
                           <label class="custom-file-label" id="orgLogoLabel" for="orgLogoUpload">sca.png</label>
                         </div>
                     </div>
@@ -170,25 +170,25 @@
                     <span class="badge-only">
                         <p>Schedule Columns</p>
                         <div class="form-check">
-                            <input checked class="form-check-input" type="checkbox" id="includeTimes" onclick="settings.includeTimes = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="includeTimes" onclick="settings.includeTimes = this.checked">
                             <label class="form-check-label" for="includeTimes">
                                 Include times in schedules   
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="includeStages" onclick="settings.includeStages = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="includeStages" onclick="settings.includeStages = this.checked">
                             <label class="form-check-label" for="includeStages">
                                 Include stages in schedules
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="includeStations" onclick="settings.includeStations = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="includeStations" onclick="settings.includeStations = this.checked">
                             <label class="form-check-label" for="includeStations">
                                 Include stations in schedules
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="includeStaffing" onclick="settings.includeStaffing = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="includeStaffing" onclick="settings.includeStaffing = this.checked">
                             <label class="form-check-label" for="includeStaffing">
                                 Include staffing in schedules
                             </label>
@@ -196,25 +196,25 @@
                         <hr>
                         <p>Options</p>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="includeLocalName" onclick="settings.includeLocalName = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="includeLocalName" onclick="settings.includeLocalName = this.checked">
                             <label class="form-check-label" for="includeLocalName">
                                 Include local names
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="includeCompetitorId" onclick="settings.includeCompetitorId = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="includeCompetitorId" onclick="settings.includeCompetitorId = this.checked">
                             <label class="form-check-label" for="includeCompetitorId">
                                 Include competitor ID on front  
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="hideStaffOnly" onclick="settings.hideStaffOnlyAssignments = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="hideStaffOnly" onclick="settings.hideStaffOnlyAssignments = this.checked">
                             <label class="form-check-label" for="hideStaffOnly">
                                 Hide staff only assignments in schedule
                             </label>
                         </div>
                         <div class="form-check">
-                            <input checked class="form-check-input" type="checkbox" id="includeQRCode" onclick="settings.showWcaLiveQrCode = this.checked">
+                            <input autocomplete="off" checked class="form-check-input" type="checkbox" id="includeQRCode" onclick="settings.showWcaLiveQrCode = this.checked">
                             <label class="form-check-label" for="includeQRCode">
                                 Include QR code with schedules
                             </label>
@@ -223,22 +223,22 @@
                             <div class="input-group-prepend">
                             <span class="input-group-text">Link for QR Code</span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Link" value="https://live.worldcubeassociation.org/" onchange="settings.qrcodeLink = this.value" onblur="UpdateQRCode()">
+                            <input autocomplete="off" type="text" class="form-control" placeholder="Link" value="https://live.worldcubeassociation.org/" onchange="settings.qrcodeLink = this.value" onblur="updateQrCode()">
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                             <span class="input-group-text">QR Code Message</span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Message" value= "Live results and full schedule available on WCA Live. Good luck and have fun!" onchange="settings.qrcodeMessage = this.value">
+                            <input autocomplete="off" type="text" class="form-control" placeholder="Message" value= "Live results and full schedule available on WCA Live. Good luck and have fun!" onchange="settings.qrcodeMessage = this.value">
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="colorFromStage" onclick="settings.colorFromStage = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="colorFromStage" onclick="settings.colorFromStage = this.checked">
                             <label class="form-check-label" for="colorFromStage">
                                 Color rows based on stage color
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="customScheduleColors" onclick="settings.customScheduleColors = this.checked" onchange="UseCustomColorChanged()">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="customScheduleColors" onclick="settings.customScheduleColors = this.checked" onchange="useCustomColorChanged()">
                             <label class="form-check-label" for="customScheduleColors">
                                 Use custom row colors in schedules
                             </label>
@@ -255,7 +255,7 @@
                                 <span class="input-group-text">Background Tint</span>
                                 <span class="input-group-text colorpicker-input-addon"><i></i></span>
                             </div>
-                            <input type="text" class="form-control" onchange="settings.certBackgroundTint = this.value"/>
+                            <input autocomplete="off" type="text" class="form-control" onchange="settings.certBackgroundTint = this.value"/>
                         </div>
 
                         <div id="cert-page-color-input" class="input-group mb-3 certificate-only">
@@ -263,7 +263,7 @@
                                 <span class="input-group-text">Page Color</span>
                                 <span class="input-group-text colorpicker-input-addon"><i></i></span>
                             </div>
-                            <input type="text" class="form-control" onchange="settings.certPageColor = this.value"/>
+                            <input autocomplete="off" type="text" class="form-control" onchange="settings.certPageColor = this.value"/>
                         </div>
 
                         <div id="cert-text-color-input" class="input-group mb-3 certificate-only">
@@ -271,7 +271,7 @@
                                 <span class="input-group-text">Text Color</span>
                                 <span class="input-group-text colorpicker-input-addon"><i></i></span>
                             </div>
-                            <input type="text" class="form-control" onchange="settings.certTextColor = this.value"/>
+                            <input autocomplete="off" type="text" class="form-control" onchange="settings.certTextColor = this.value"/>
                         </div>
 
                         <hr>
@@ -280,21 +280,36 @@
                             <div class="input-group-prepend">
                             <span class="input-group-text">Signature Name for Certificate</span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Name" onchange="settings.certOrganiser = this.value">
+                            <input autocomplete="off" type="text" class="form-control" placeholder="Name" onchange="settings.certOrganiser = this.value">
                         </div>
 
                         <div class="input-group mb-3 certificate-only">
                             <div class="input-group-prepend">
                             <span class="input-group-text">Signature Role for Certificate</span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Role" value="WCA DELEGATE" onchange="settings.certRole = this.value">
+                            <input autocomplete="off" type="text" class="form-control" placeholder="Role" value="WCA DELEGATE" onchange="settings.certRole = this.value">
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="thinMargins" onclick="settings.certThinMargins = this.checked">
+                            <input autocomplete="off" class="form-check-input" type="checkbox" id="thinMargins" onclick="settings.certThinMargins = this.checked">
                             <label class="form-check-label" for="thinMargins">
                                 Reduce margin between logos and edge of page
                             </label>
+                        </div>
+                    </span>
+                    <span class="custom-certificate-only">
+                        <hr>
+                        <div class="input-group mb-3 custom-certificate-only">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text">Custom Event Name</span>
+                            </div>
+                            <input autocomplete="off" type="text" class="form-control" placeholder="My Custom Event" onchange="settings.customCertEventName = this.value">
+                        </div>
+                        <div class="input-group mb-3 custom-certificate-only">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text">Custom Result Prefix</span>
+                            </div>
+                            <input autocomplete="off" type="text" class="form-control" value="Average of:" onchange="settings.customCertResultPrefix = this.value">
                         </div>
                     </span>
                 </div>
@@ -306,9 +321,9 @@
                     <p>
                         'Generate' and preview the document. Adjust settings as needed and 'Generate' again. 'Download' to save the PDF document.
                     </p>
-                    <button class="btn btn-secondary" id="preview-button" onclick="PreviewDocument()">Quick Preview</button>
-                    <button class="btn btn-primary" onclick="GenerateDocument()">Generate</button>
-                    <button class="btn btn-secondary" id="print-button" onclick="PrintDocument()" disabled>Download</button>
+                    <button class="btn btn-secondary" id="preview-button" onclick="previewDocument()">Quick Preview</button>
+                    <button class="btn btn-primary" onclick="generateDocument()">Generate</button>
+                    <button class="btn btn-secondary" id="print-button" onclick="printDocument()" disabled>Download</button>
                     <p id="status" class="info"></p>
 
                     <div id="print-document" style="display:none;"></div>
@@ -349,29 +364,28 @@
   </div>
 </footer>    
 
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src="./js/lib/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
-<script src="./lib/moment.js"></script>
-<script src="./lib/moment.tz.js"></script>
-<script src="./lib/PDFjs.umd.min.js"></script>
-<script src="./lib/qrcode.min.js"></script>
-<script src="./lib/bootstrap-colorpicker.min.js"></script>
+<script src="./js/lib/moment.js"></script>
+<script src="./js/lib/moment.tz.js"></script>
+<script src="./js/lib/PDFjs.umd.min.js"></script>
+<script src="./js/lib/qrcode.min.js"></script>
+<script src="./js/lib/bootstrap-colorpicker.min.js"></script>
 
-<script src="./lib/NotoSans-Regular-normal.js"></script>
-<script src="./lib/NotoSans-Bold-normal.js"></script>
-<script src="./lib/NotoSansArabic-normal.js"></script>
-<script src="./lib/NotoSansArmenian-normal.js"></script>
-<script src="./lib/NotoSansGeorgian-normal.js"></script>
-<script src="./lib/NotoSansThai-normal.js"></script>
-<script src="./lib/WenQuanYiZenHei-normal.js"></script>
-<script src="./lib/Barmeno-Regular-normal.js"></script>
-<script src="./lib/Oswald-Regular-normal.js"></script>
-<script src="./lib/Oswald-SemiBold-normal.js"></script>
-<script src="./lib/cubing-icons-normal.js"></script>
+<script src="./js/lib/NotoSans-Regular-normal.js"></script>
+<script src="./js/lib/NotoSans-Bold-normal.js"></script>
+<script src="./js/lib/NotoSansArabic-normal.js"></script>
+<script src="./js/lib/NotoSansArmenian-normal.js"></script>
+<script src="./js/lib/NotoSansGeorgian-normal.js"></script>
+<script src="./js/lib/NotoSansThai-normal.js"></script>
+<script src="./js/lib/WenQuanYiZenHei-normal.js"></script>
+<script src="./js/lib/Barmeno-Regular-normal.js"></script>
+<script src="./js/lib/Oswald-Regular-normal.js"></script>
+<script src="./js/lib/Oswald-SemiBold-normal.js"></script>
+<script src="./js/lib/cubing-icons-normal.js"></script>
 
 <script src="./js/demoWCIF.js"></script>
-
 <script src="./js/utils.js"></script>
 <script src="./js/constants.js"></script>
 <script src="./js/generators.js"></script>
