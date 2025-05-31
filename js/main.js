@@ -120,6 +120,7 @@ var settings = {
     // General settings
     template: 0,
     // Badge settings
+    includeOrgLogo: true,
     includeTimes: true,
     includeStaffing: false,
     includeStations: false,

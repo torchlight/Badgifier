@@ -105,7 +105,6 @@ function generatePersonInformation(index) {
                     eventCode: event,
                     eventText: eventText,
                     stageText: activity.roomName,
-                    stageColor: activity.roomColor,
                     competing: -1,
                     stationNumber: null,
                     judging: [],
@@ -118,6 +117,7 @@ function generatePersonInformation(index) {
             if (assignment.assignmentCode == "competitor") {
                 personalSchedule[day].assignments[activity.parentActivityCode].competing = group.substr(1)
                 personalSchedule[day].assignments[activity.parentActivityCode].stationNumber = assignment.stationNumber
+                personalSchedule[day].assignments[activity.parentActivityCode].stageColor = activity.roomColor
             } else if (assignment.assignmentCode == "staff-judge") {
                 personalSchedule[day].assignments[activity.parentActivityCode].judging.push(group.substr(1))
             } else if (assignment.assignmentCode == "staff-runner") {
@@ -588,7 +588,7 @@ function drawSchedule(doc, x, y, w, info, hscale = 1.0) {
                 let fillColor = [255, 255, 255]
                 if (settings.customScheduleColors) {
                     fillColor = hexToRgb(getRowColor(alternatingColors, assignment.eventCode, assignment.competing, assignment.stationNumber, assignment.stageText))
-                } else if (settings.colorFromStage) {
+                } else if (settings.colorFromStage && assignment.stageColor) {
                     fillColor = assignment.stageColor
                 } else if (alternatingColors % 2 == 0) {
                     fillColor = [220, 220, 220]
@@ -687,8 +687,10 @@ function addPortraitNameBadgeWithDimensions(doc, index, badgeWidth, badgeHeight,
         let wcaRatio = $("#wca-img").width() / $("#wca-img").height()
         doc.addImage($("#wca-img")[0], "PNG", 3, badgeHeight - (logoHeight + 3), logoHeight * wcaRatio, logoHeight, "wca", "SLOW")
 
-        let orgRatio = $("#org-img").width() / $("#org-img").height()
-        doc.addImage($("#org-img")[0], "PNG", halfWidth - (logoHeight * orgRatio) - 3, badgeHeight - (logoHeight + 3), logoHeight * orgRatio, logoHeight, "org", "SLOW")
+        if (settings.includeOrgLogo) {
+            let orgRatio = $("#org-img").width() / $("#org-img").height()
+            doc.addImage($("#org-img")[0], "PNG", halfWidth - (logoHeight * orgRatio) - 3, badgeHeight - (logoHeight + 3), logoHeight * orgRatio, logoHeight, "org", "SLOW")
+        }
 
         // Add country flag
         if (!info.blank) {
@@ -819,8 +821,10 @@ function addLandscapeNameBadgeWithDimensions(doc, index, badgeWidth, badgeHeight
         let wcaRatio = $("#wca-img").width() / $("#wca-img").height()
         doc.addImage($("#wca-img")[0], "PNG", 3, halfWidth - 13, 10 * wcaRatio, 10, "wca", "SLOW")
 
-        let orgRatio = $("#org-img").width() / $("#org-img").height()
-        doc.addImage($("#org-img")[0], "PNG", badgeHeight - (10 * orgRatio) - 3, halfWidth - 13, 10 * orgRatio, 10, "org", "SLOW")
+        if (settings.includeOrgLogo) {
+            let orgRatio = $("#org-img").width() / $("#org-img").height()
+            doc.addImage($("#org-img")[0], "PNG", badgeHeight - (10 * orgRatio) - 3, halfWidth - 13, 10 * orgRatio, 10, "org", "SLOW")
+        }
 
         // Add country flag
         if (!info.blank) {
@@ -939,8 +943,10 @@ function addChampionshipPortraitNameBadge(doc, index) {
         let wcaRatio = $("#wca-img").width() / $("#wca-img").height()
         doc.addImage($("#wca-img")[0], "PNG", 5, A6P_HEIGHT - 18, 13 * wcaRatio, 13, "wca", "SLOW")
 
-        let orgRatio = $("#org-img").width() / $("#org-img").height()
-        doc.addImage($("#org-img")[0], "PNG", A6P_WIDTH - (13 * orgRatio) - 5, A6P_HEIGHT - 18, 13 * orgRatio, 13, "org", "SLOW")
+        if (settings.includeOrgLogo) {
+            let orgRatio = $("#org-img").width() / $("#org-img").height()
+            doc.addImage($("#org-img")[0], "PNG", A6P_WIDTH - (13 * orgRatio) - 5, A6P_HEIGHT - 18, 13 * orgRatio, 13, "org", "SLOW")
+        }
 
         // Add country flag
         if (!info.blank) {
@@ -1043,8 +1049,10 @@ function addCertificate(doc, eventIndex, place, dateText, tintedImage, blank=fal
     let wcaRatio = $("#wca-large-img").width() / $("#wca-large-img").height()
     doc.addImage($("#wca-large-img")[0], "PNG", logoMargins[0], logoMargins[1], logoHeight * wcaRatio, logoHeight, "wca-large", "SLOW")
 
-    let orgRatio = $("#org-img").width() / $("#org-img").height()
-    doc.addImage($("#org-img")[0], "PNG", A4L_WIDTH - logoMargins[0] - (logoHeight * orgRatio), logoMargins[1], logoHeight * orgRatio, logoHeight, "org", "SLOW")
+    if (settings.includeOrgLogo) {
+        let orgRatio = $("#org-img").width() / $("#org-img").height()
+        doc.addImage($("#org-img")[0], "PNG", A4L_WIDTH - logoMargins[0] - (logoHeight * orgRatio), logoMargins[1], logoHeight * orgRatio, logoHeight, "org", "SLOW")
+    }
 
     // Add Main text
     doc.setFont("Barmeno-Regular")
