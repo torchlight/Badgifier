@@ -676,7 +676,7 @@ function addPortraitNameBadgeWithDimensions(doc, index, badgeWidth, badgeHeight,
         doc.setFont("NotoSans-Regular")
         doc.setFontSize(13)
 
-        if (!info.blank) {
+        if (info.name) {
             let nameText = info.wcaid
             if (info.role == "delegate" || info.role == "trainee-delegate") {
                 doc.setTextColor(196, 0, 0)
@@ -688,7 +688,7 @@ function addPortraitNameBadgeWithDimensions(doc, index, badgeWidth, badgeHeight,
                 doc.setTextColor(0, 0, 196)
                 nameText = "NEWCOMER"
             }
-            if (settings.includeCompetitorId) {
+            if (settings.includeCompetitorId && info.compid) {
                 nameText += ` - ID ${info.compid}`
             }
 
@@ -731,32 +731,34 @@ function addPortraitNameBadgeWithDimensions(doc, index, badgeWidth, badgeHeight,
 
         doc.setCurrentTransformationMatrix(new doc.Matrix(1, 0, 0, 1, mmToPdf(tx), mmToPdf(ty)))
 
-        // Place name
-        drawName(doc, info.name, "left", 3, 7, halfWidth - 12, 4)
+        if (info.compid !== null && info.compid !== '-') {
+            // Place name
+            drawName(doc, info.name, "left", 3, 7, halfWidth - 12, 4)
 
-        // Place registration id
-        doc.setFont("NotoSans-Regular")
-        doc.setFontSize(7)
-        doc.text(`${info.compid}`, halfWidth - 6, 6, {
-            align: "center",
-        })
-
-        // Place schedule
-        let height = drawSchedule(doc, 3, 10, halfWidth - 6, info)
-
-        // WCA Live QR code is assumed to be square
-        // We don't draw it if the schedule extended down too far
-        if (settings.showWcaLiveQrCode && (height + 10) < badgeHeight - 20) {
-            doc.addImage($("#qrcode-img")[0], "PNG", halfWidth - 18, badgeHeight - 18, 15, 15, "qrcode", "SLOW")
-            doc.setFontSize(8)
+            // Place registration id
             doc.setFont("NotoSans-Regular")
-            let wcaLiveLines = doc.splitTextToSize(settings.qrcodeMessage, halfWidth - 25)
-            let textHeight = wcaLiveLines.length * 4
-            let textStart = badgeHeight - 15 + ((15 - textHeight) / 2)
-            for (let i = 0; i < wcaLiveLines.length; i++) {
-                doc.text(wcaLiveLines[i], halfWidth - 20, textStart + (i * 4), {
-                    align: "right",
-                })
+            doc.setFontSize(7)
+            doc.text(`${info.compid}`, halfWidth - 6, 6, {
+                align: "center",
+            })
+
+            // Place schedule
+            let height = drawSchedule(doc, 3, 10, halfWidth - 6, info)
+
+            // WCA Live QR code is assumed to be square
+            // We don't draw it if the schedule extended down too far
+            if (settings.showWcaLiveQrCode && (height + 10) < badgeHeight - 20) {
+                doc.addImage($("#qrcode-img")[0], "PNG", halfWidth - 18, badgeHeight - 18, 15, 15, "qrcode", "SLOW")
+                doc.setFontSize(8)
+                doc.setFont("NotoSans-Regular")
+                let wcaLiveLines = doc.splitTextToSize(settings.qrcodeMessage, halfWidth - 25)
+                let textHeight = wcaLiveLines.length * 4
+                let textStart = badgeHeight - 15 + ((15 - textHeight) / 2)
+                for (let i = 0; i < wcaLiveLines.length; i++) {
+                    doc.text(wcaLiveLines[i], halfWidth - 20, textStart + (i * 4), {
+                        align: "right",
+                    })
+                }
             }
         }
 
@@ -824,7 +826,7 @@ function addLandscapeNameBadgeWithDimensions(doc, index, badgeWidth, badgeHeight
                 doc.setTextColor(0, 0, 196)
                 nameText = "NEWCOMER"
             }
-            if (settings.includeCompetitorId) {
+            if (settings.includeCompetitorId && info.compid) {
                 nameText += ` - ID ${info.compid}`
             }
 
@@ -865,32 +867,34 @@ function addLandscapeNameBadgeWithDimensions(doc, index, badgeWidth, badgeHeight
 
         doc.setCurrentTransformationMatrix(new doc.Matrix(1, 0, 0, 1, mmToPdf(tx), mmToPdf(ty)))
 
-        // Place name
-        drawName(doc, info.name, "left", 3, 7, halfWidth - 12, 4)
+        if (info.compid !== null && info.compid !== '-') {
+            // Place name
+            drawName(doc, info.name, "left", 3, 7, halfWidth - 12, 4)
 
-        // Place registration id
-        doc.setFont("NotoSans-Regular")
-        doc.setFontSize(7)
-        doc.text(`${info.compid}`, halfWidth - 6, 6, {
-            align: "center",
-        })
-
-        // Place schedule
-        let height = drawSchedule(doc, 3, 10, halfWidth - 6, info)
-
-        // WCA Live QR code is assumed to be square
-        // We don't draw it if the schedule extended down too far
-        if (settings.showWcaLiveQrCode && (height + 10) < badgeHeight - 20) {
-            doc.addImage($("#qrcode-img")[0], "PNG", halfWidth - 18, badgeHeight - 18, 15, 15, "qrcode", "SLOW")
-            doc.setFontSize(8)
+            // Place registration id
             doc.setFont("NotoSans-Regular")
-            let wcaLiveLines = doc.splitTextToSize(settings.qrcodeMessage, halfWidth - 25)
-            let textHeight = wcaLiveLines.length * 4
-            let textStart = badgeHeight - 15 + ((15 - textHeight) / 2)
-            for (let i = 0; i < wcaLiveLines.length; i++) {
-                doc.text(wcaLiveLines[i], halfWidth - 20, textStart + (i * 4), {
-                    align: "right",
-                })
+            doc.setFontSize(7)
+            doc.text(`${info.compid}`, halfWidth - 6, 6, {
+                align: "center",
+            })
+
+            // Place schedule
+            let height = drawSchedule(doc, 3, 10, halfWidth - 6, info)
+
+            // WCA Live QR code is assumed to be square
+            // We don't draw it if the schedule extended down too far
+            if (settings.showWcaLiveQrCode && (height + 10) < badgeHeight - 20) {
+                doc.addImage($("#qrcode-img")[0], "PNG", halfWidth - 18, badgeHeight - 18, 15, 15, "qrcode", "SLOW")
+                doc.setFontSize(8)
+                doc.setFont("NotoSans-Regular")
+                let wcaLiveLines = doc.splitTextToSize(settings.qrcodeMessage, halfWidth - 25)
+                let textHeight = wcaLiveLines.length * 4
+                let textStart = badgeHeight - 15 + ((15 - textHeight) / 2)
+                for (let i = 0; i < wcaLiveLines.length; i++) {
+                    doc.text(wcaLiveLines[i], halfWidth - 20, textStart + (i * 4), {
+                        align: "right",
+                    })
+                }
             }
         }
 
@@ -947,7 +951,7 @@ function addChampionshipPortraitNameBadge(doc, index) {
                 doc.setTextColor(0, 0, 196)
                 nameText = "NEWCOMER"
             }
-            if (settings.includeCompetitorId) {
+            if (settings.includeCompetitorId && info.compid) {
                 nameText += ` - ID ${info.compid}`
             }
 
@@ -986,32 +990,34 @@ function addChampionshipPortraitNameBadge(doc, index) {
     {
         doc.saveGraphicsState()
 
-        // Place name
-        drawName(doc, info.name, "left", 6, 10, A6P_WIDTH - 20, 6)
+        if (info.compid !== null && info.compid !== '-') {
+            // Place name
+            drawName(doc, info.name, "left", 6, 10, A6P_WIDTH - 20, 6)
 
-        // Place registration id
-        doc.setFont("NotoSans-Regular")
-        doc.setFontSize(7)
-        doc.text(`${info.compid}`, A6P_WIDTH - 9, 8, {
-            align: "center",
-        })
-
-        // Place schedule
-        let height = drawSchedule(doc, 7, 15, A6P_WIDTH - 14, info, 1.2)
-
-        // WCA Live QR code is assumed to be square
-        // We don't draw it if the schedule extended down too far
-        if (settings.showWcaLiveQrCode && (height + 10) < A6P_HEIGHT - 30) {
-            doc.addImage($("#qrcode-img")[0], "PNG", A6P_WIDTH - 25, A6P_HEIGHT - 25, 20, 20, "qrcode", "SLOW")
-            doc.setFontSize(13)
+            // Place registration id
             doc.setFont("NotoSans-Regular")
-            let wcaLiveLines = doc.splitTextToSize(settings.qrcodeMessage, A6P_WIDTH - 35)
-            let textHeight = wcaLiveLines.length * 6
-            let textStart = A6P_HEIGHT - 20 + ((20 - textHeight) / 2)
-            for (let i = 0; i < wcaLiveLines.length; i++) {
-                doc.text(wcaLiveLines[i], A6P_WIDTH - 28, textStart + (i * 6), {
-                    align: "right",
-                })
+            doc.setFontSize(7)
+            doc.text(`${info.compid}`, A6P_WIDTH - 9, 8, {
+                align: "center",
+            })
+
+            // Place schedule
+            let height = drawSchedule(doc, 7, 15, A6P_WIDTH - 14, info, 1.2)
+
+            // WCA Live QR code is assumed to be square
+            // We don't draw it if the schedule extended down too far
+            if (settings.showWcaLiveQrCode && (height + 10) < A6P_HEIGHT - 30) {
+                doc.addImage($("#qrcode-img")[0], "PNG", A6P_WIDTH - 25, A6P_HEIGHT - 25, 20, 20, "qrcode", "SLOW")
+                doc.setFontSize(13)
+                doc.setFont("NotoSans-Regular")
+                let wcaLiveLines = doc.splitTextToSize(settings.qrcodeMessage, A6P_WIDTH - 35)
+                let textHeight = wcaLiveLines.length * 6
+                let textStart = A6P_HEIGHT - 20 + ((20 - textHeight) / 2)
+                for (let i = 0; i < wcaLiveLines.length; i++) {
+                    doc.text(wcaLiveLines[i], A6P_WIDTH - 28, textStart + (i * 6), {
+                        align: "right",
+                    })
+                }
             }
         }
 
@@ -1116,6 +1122,9 @@ function makeDocument(preview = false) {
             if (a.registration.status == "accepted") {
                 return true
             }
+        } else if (a.roles && (a.roles.includes("organizer") || a.roles.includes("delegate"))) {
+            // Also include non-competing organizers and delegates
+            return true
         }
         return false
     })
@@ -1131,13 +1140,18 @@ function makeDocument(preview = false) {
     } else {
         // Normally we sort by name/newcomer status
         persons.sort((a, b) => {
+            let aCat = 0, bCat = 0
+            if (a.registration == null) {aCat = 2}
+            if (b.registration == null) {bCat = 2}
             if (template.newcomersFirst) {
-                if (a.wcaId == null && b.wcaId != null) {
-                    return -1
-                }
-                if (a.wcaId != null && b.wcaId == null) {
-                    return 1
-                }
+                if (a.wcaId != null && aCat === 0) {aCat = 1}
+                if (b.wcaId != null && bCat === 0) {bCat = 1}
+            }
+            if (aCat < bCat) {
+                return -1
+            }
+            if (aCat > bCat) {
+                return 1
             }
             if (a.name < b.name) {
                 return -1
