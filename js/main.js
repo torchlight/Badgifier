@@ -134,6 +134,7 @@ var settings = {
     colorFromStage: false,
     qrcodeLink: "https://live.worldcubeassociation.org/",
     qrcodeMessage: "Live results and full schedule available on WCA Live. Good luck and have fun!",
+    drawOuterBorders: false,
     // Certificate settings
     certOrganiser: "Name",
     certRole: "WCA DELEGATE",
