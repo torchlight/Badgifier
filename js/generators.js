@@ -1217,6 +1217,12 @@ function makeA4LandscapeBadges() {
             globalDoc.setDrawColor(128, 128, 128)
             globalDoc.line(A4L_WIDTH / 2, 0, A4L_WIDTH / 2, A4L_HEIGHT)
             globalDoc.line(0, A4L_HEIGHT / 2, A4L_WIDTH, A4L_HEIGHT / 2)
+            if (settings.drawOuterBorders) {
+                globalDoc.line(0, 0, A4L_WIDTH, 0)
+                globalDoc.line(0, A4L_HEIGHT, A4L_WIDTH, A4L_HEIGHT)
+                globalDoc.line(0, 0, 0, A4L_HEIGHT)
+                globalDoc.line(A4L_WIDTH, 0, A4L_WIDTH, A4L_HEIGHT)
+            }
             globalDoc.restoreGraphicsState()
             break
         }
@@ -1300,6 +1306,12 @@ function makeA4PortraitBadges() {
             globalDoc.setDrawColor(128, 128, 128)
             globalDoc.line(A4L_WIDTH / 2, 0, A4L_WIDTH / 2, A4L_HEIGHT)
             globalDoc.line(0, A4L_HEIGHT / 2, A4L_WIDTH, A4L_HEIGHT / 2)
+            if (settings.drawOuterBorders) {
+                globalDoc.line(0, 0, A4L_WIDTH, 0)
+                globalDoc.line(0, A4L_HEIGHT, A4L_WIDTH, A4L_HEIGHT)
+                globalDoc.line(0, 0, 0, A4L_HEIGHT)
+                globalDoc.line(A4L_WIDTH, 0, A4L_WIDTH, A4L_HEIGHT)
+            }
             globalDoc.restoreGraphicsState()
             break
         }
@@ -1354,6 +1366,12 @@ function makeLetterPortraitBadges() {
             globalDoc.setDrawColor(128, 128, 128)
             globalDoc.line(LETTERL_WIDTH / 2, 0, LETTERL_WIDTH / 2, LETTERL_HEIGHT)
             globalDoc.line(0, LETTERL_HEIGHT / 2, LETTERL_WIDTH, LETTERL_HEIGHT / 2)
+            if (settings.drawOuterBorders) {
+                globalDoc.line(0, 0, LETTERL_WIDTH, 0)
+                globalDoc.line(0, LETTERL_HEIGHT, LETTERL_WIDTH, LETTERL_HEIGHT)
+                globalDoc.line(0, 0, 0, LETTERL_HEIGHT)
+                globalDoc.line(LETTERL_WIDTH, 0, LETTERL_WIDTH, LETTERL_HEIGHT)
+            }
             globalDoc.restoreGraphicsState()
             break
         }
@@ -1408,6 +1426,12 @@ function makeLetterLandscapeBadges() {
             globalDoc.setDrawColor(128, 128, 128)
             globalDoc.line(LETTERL_WIDTH / 2, 0, LETTERL_WIDTH / 2, LETTERL_HEIGHT)
             globalDoc.line(0, LETTERL_HEIGHT / 2, LETTERL_WIDTH, LETTERL_HEIGHT / 2)
+            if (settings.drawOuterBorders) {
+                globalDoc.line(0, 0, LETTERL_WIDTH, 0)
+                globalDoc.line(0, LETTERL_HEIGHT, LETTERL_WIDTH, LETTERL_HEIGHT)
+                globalDoc.line(0, 0, 0, LETTERL_HEIGHT)
+                globalDoc.line(LETTERL_WIDTH, 0, LETTERL_WIDTH, LETTERL_HEIGHT)
+            }
             globalDoc.restoreGraphicsState()
             break
         }
