@@ -164,7 +164,7 @@ function generatePersonInformation(index) {
 
     return {
         blank: isBlank,
-        name: name,
+        get name() {return name || settings.placeholderName},
         wcaid: wcaid,
         compid: compid,
         countryCode: countryCode,
@@ -661,7 +661,7 @@ function addPortraitNameBadgeWithDimensions(doc, index, badgeWidth, badgeHeight,
 
         let nameStart = badgeHeight - 33
         // Place name, starting from bottom and adding extra lines on top for longer names
-        if (!info.blank) {
+        if (info.name) {
             let [firstLine, secondLine, firstLineLength, secondLineLength] = splitNameOntoTwoLines(doc, info.name, 10, halfWidth - 6 + 1)
             let scale = 1/Math.max(1, Math.max(firstLineLength, secondLineLength) / (halfWidth - 6))
             drawName(doc, firstLine, "center", 3, nameStart, halfWidth - 6, 10 * scale)
@@ -676,7 +676,7 @@ function addPortraitNameBadgeWithDimensions(doc, index, badgeWidth, badgeHeight,
         doc.setFont("NotoSans-Regular")
         doc.setFontSize(13)
 
-        if (info.name) {
+        if (!info.blank) {
             let nameText = info.wcaid
             if (info.role == "delegate" || info.role == "trainee-delegate") {
                 doc.setTextColor(196, 0, 0)
@@ -1181,7 +1181,7 @@ function makeA6LandscapeBadges() {
     // Keep track of pages and badges
     let index = 0
     while (true) {
-        if (index >= (persons.length + 1)) {
+        if (index >= (persons.length + settings.placeholderQuantity)) {
             break
         }
 
@@ -1210,7 +1210,7 @@ function makeA4LandscapeBadges() {
     // Keep track of pages and badges
     let index = 0
     while (true) {
-        if (index >= (persons.length + 1)) {
+        if (index >= (persons.length + settings.placeholderQuantity)) {
             globalDoc.saveGraphicsState()
             globalDoc.setLineWidth(0.25)
             globalDoc.setLineDash([1])
@@ -1270,7 +1270,7 @@ function makeA6PortraitBadges() {
     // Keep track of pages and badges
     let index = 0
     while (true) {
-        if (index >= (persons.length + 1)) {
+        if (index >= (persons.length + settings.placeholderQuantity)) {
             break
         }
 
@@ -1299,7 +1299,7 @@ function makeA4PortraitBadges() {
     // Keep track of pages and badges
     let index = 0
     while (true) {
-        if (index >= (persons.length + 1)) {
+        if (index >= (persons.length + settings.placeholderQuantity)) {
             globalDoc.saveGraphicsState()
             globalDoc.setLineWidth(0.25)
             globalDoc.setLineDash([1])
@@ -1359,7 +1359,7 @@ function makeLetterPortraitBadges() {
     // Keep track of pages and badges
     let index = 0
     while (true) {
-        if (index >= (persons.length + 1)) {
+        if (index >= (persons.length + settings.placeholderQuantity)) {
             globalDoc.saveGraphicsState()
             globalDoc.setLineWidth(0.25)
             globalDoc.setLineDash([1])
@@ -1419,7 +1419,7 @@ function makeLetterLandscapeBadges() {
     // Keep track of pages and badges
     let index = 0
     while (true) {
-        if (index >= (persons.length + 1)) {
+        if (index >= (persons.length + settings.placeholderQuantity)) {
             globalDoc.saveGraphicsState()
             globalDoc.setLineWidth(0.25)
             globalDoc.setLineDash([1])
@@ -1479,7 +1479,7 @@ function makeFourBySixPortraitBadges() {
     // Keep track of pages and badges
     let index = 0
     while (true) {
-        if (index >= (persons.length + 1)) {
+        if (index >= (persons.length + settings.placeholderQuantity)) {
             break
         }
 
@@ -1508,7 +1508,7 @@ function makeFourBySixLandscapeBadges() {
     // Keep track of pages and badges
     let index = 0
     while (true) {
-        if (index >= (persons.length + 1)) {
+        if (index >= (persons.length + settings.placeholderQuantity)) {
             break
         }
 
@@ -1542,7 +1542,7 @@ function makeLetterSmallPortraitBadges() {
     // Keep track of pages and badges
     let index = 0
     while (true) {
-        if (index >= (persons.length + 1)) {
+        if (index >= (persons.length + settings.placeholderQuantity)) {
             globalDoc.saveGraphicsState()
             globalDoc.setLineWidth(0.25)
             globalDoc.setLineDash([1])
@@ -1606,7 +1606,7 @@ function makeChampionshipPortraitBadges() {
     // Keep track of pages and badges
     let index = 0
     while (true) {
-        if (index >= (persons.length + 1)) {
+        if (index >= (persons.length + settings.placeholderQuantity)) {
             break
         }
 
