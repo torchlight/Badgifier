@@ -698,7 +698,7 @@ function addPortraitNameBadgeWithDimensions(doc, index, badgeWidth, badgeHeight,
         }
         doc.setTextColor(0, 0, 0)
 
-        let logoHeight = Math.min(10, halfWidth / 7)
+        let logoHeight = Math.min(10, halfWidth / 8)
 
         // Add logos
         let wcaRatio = $("#wca-img").width() / $("#wca-img").height()
@@ -838,7 +838,7 @@ function addLandscapeNameBadgeWithDimensions(doc, index, badgeWidth, badgeHeight
 
         // Add logos
         let wcaRatio = $("#wca-img").width() / $("#wca-img").height()
-        doc.addImage($("#wca-img")[0], "PNG", 3, halfWidth - 13, 10 * wcaRatio, 10, "wca", "SLOW")
+        doc.addImage($("#wca-img")[0], "PNG", 3, halfWidth - 13, 9 * wcaRatio, 9, "wca", "SLOW")
 
         if (settings.includeOrgLogo) {
             let orgRatio = $("#org-img").width() / $("#org-img").height()
