@@ -250,7 +250,7 @@ function drawName(doc, text, align, x, y, w, h, latinFont = "NotoSans-Bold") {
 
 // Split a name so it fits evenly across two lines
 // h is height of one line
-function splitNameOntoTwoLines(doc, text, h) {
+function splitNameOntoTwoLines(doc, text, h, splitThreshold) {
     let fontSize = h * 2.2
     doc.saveGraphicsState()
 
@@ -271,17 +271,20 @@ function splitNameOntoTwoLines(doc, text, h) {
 
     if (textParts.length < 1) {
         doc.restoreGraphicsState()
-        return ["", ""]
+        return ["", "", 0, 0]
     } else if (textParts.length < 2) {
+        let textLength = doc.getTextWidth(textParts[0])
         doc.restoreGraphicsState()
-        return ["", text]
+        return ["", text, 0, textLength]
     }
 
     let textLengths = []
+    let hasLocalName = false
     for (let i = 0; i < textParts.length; i++) {
         const [, latinName, localName] = textParts[i].match(/(.*)\s*[(（](.+)[)）]/) || [null, textParts[i], null]
 
         if (localName && settings.includeLocalName) {
+            hasLocalName = true
             let localFont = determineFont(localName)
 
             // Include local names if we want them
@@ -308,15 +311,28 @@ function splitNameOntoTwoLines(doc, text, h) {
     doc.restoreGraphicsState()
 
     // Determine best way to split
-    let target = 0
+    let totalLength = 0
     for (let i = 0; i < textParts.length; i++) {
-        target += textLengths[i]
+        totalLength += textLengths[i]
     }
-    target /= 2
+    totalLength += (textParts.length - 1) * spaceLength
+    let target = (totalLength - spaceLength) / 2
+    if (splitThreshold && totalLength <= splitThreshold) {
+        return ["", textParts.join(" "), 0, totalLength]
+    }
+
+    if (hasLocalName) {
+        // If they have a local name, prefer to have it on its own line
+        let localNameLength = textLengths.at(-1)
+        let latinNameLength = totalLength - spaceLength - localNameLength
+        if (latinNameLength <= splitThreshold && localNameLength <= splitThreshold) {
+            return [textParts.slice(0, -1).join(" "), textParts.at(-1), latinNameLength, localNameLength]
+        }
+    }
 
     let firstLine = ""
-    let secondLine = textParts[textParts.length - 1]
-    let secondLineLength = textLengths[textParts.length - 1]
+    let secondLine = textParts.at(-1)
+    let secondLineLength = textLengths.at(-1)
     for (let i = textParts.length - 2; i >= 0; i--) {
         let nextLength = secondLineLength + spaceLength + textLengths[i]
         if (Math.abs(secondLineLength - target) <= Math.abs(nextLength - target)) {
@@ -333,7 +349,7 @@ function splitNameOntoTwoLines(doc, text, h) {
         }
     }
 
-    return [firstLine, secondLine]
+    return [firstLine, secondLine, totalLength - spaceLength - secondLineLength, secondLineLength]
 }
 
 // Draw a box with text in it
@@ -646,9 +662,10 @@ function addPortraitNameBadgeWithDimensions(doc, index, badgeWidth, badgeHeight,
         let nameStart = badgeHeight - 33
         // Place name, starting from bottom and adding extra lines on top for longer names
         if (!info.blank) {
-            let textLines = splitNameOntoTwoLines(doc, info.name, 10)
-            drawName(doc, textLines[0], "center", 3, nameStart, halfWidth - 6, 10)
-            drawName(doc, textLines[1], "center", 3, nameStart + 9, halfWidth - 6, 10)
+            let [firstLine, secondLine, firstLineLength, secondLineLength] = splitNameOntoTwoLines(doc, info.name, 10, halfWidth - 6 + 1)
+            let scale = 1/Math.max(1, Math.max(firstLineLength, secondLineLength) / (halfWidth - 6))
+            drawName(doc, firstLine, "center", 3, nameStart, halfWidth - 6, 10 * scale)
+            drawName(doc, secondLine, "center", 3, nameStart + 9, halfWidth - 6, 10 * scale)
         }
 
         doc.setLineWidth(0.25)
@@ -904,9 +921,10 @@ function addChampionshipPortraitNameBadge(doc, index) {
 
         // Place name, starting from bottom and adding extra lines on top for longer names
         if (!info.blank) {
-            let textLines = splitNameOntoTwoLines(doc, info.name, 15)
-            drawName(doc, textLines[0], "center", 5, 102, A6P_WIDTH - 10, 13)
-            drawName(doc, textLines[1], "center", 5, 112, A6P_WIDTH - 10, 13)
+            let [firstLine, secondLine, firstLineLength, secondLineLength] = splitNameOntoTwoLines(doc, info.name, 15, A6P_WIDTH - 10 + 1)
+            let scale = 1/Math.max(1, Math.max(firstLineLength, secondLineLength) / (A6P_WIDTH - 10))
+            drawName(doc, textLines[0], "center", 5, 102, A6P_WIDTH - 10, 13*scale)
+            drawName(doc, textLines[1], "center", 5, 102 + 10*scale, A6P_WIDTH - 10, 13*scale)
         }
 
         doc.setLineWidth(0.25)
