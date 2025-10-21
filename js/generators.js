@@ -927,8 +927,8 @@ function addChampionshipPortraitNameBadge(doc, index) {
         if (!info.blank) {
             let [firstLine, secondLine, firstLineLength, secondLineLength] = splitNameOntoTwoLines(doc, info.name, 15, A6P_WIDTH - 10 + 1)
             let scale = 1/Math.max(1, Math.max(firstLineLength, secondLineLength) / (A6P_WIDTH - 10))
-            drawName(doc, textLines[0], "center", 5, 102, A6P_WIDTH - 10, 13*scale)
-            drawName(doc, textLines[1], "center", 5, 102 + 10*scale, A6P_WIDTH - 10, 13*scale)
+            drawName(doc, firstLine, "center", 5, 102, A6P_WIDTH - 10, 13*scale)
+            drawName(doc, secondLine, "center", 5, 102 + 10*scale, A6P_WIDTH - 10, 13*scale)
         }
 
         doc.setLineWidth(0.25)
